@@ -1,9 +1,14 @@
 package demo
 
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+
 object Main extends App {
 
-  println("start to push records into topic")
-  PushTopic()
+  Future {
+    println("start to push records into topic")
+    PushTopic()
+  }
 
   println("Start to poll 10 times")
   val consumer = PollTopic.process(1, 10)
@@ -16,4 +21,5 @@ object Main extends App {
 
   println("Start to poll 5 times with 11 secs timeout")
   PollTopic.process(15, 30, 11000)
+
 }
