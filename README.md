@@ -138,6 +138,7 @@ thread sleep which simulates processing time (11000 ms) finished !
 ## :cat: The results
 
 1. The default size of poll is maximum 500 records. which can be found in doc ([Link](https://kafka.apache.org/documentation/#upgrade_1010_notable))
-2. If we poll 500 records but only commit 1 record offset (Which simulates partial transaction), the current consumer ignore offset and continues to poll from 501 records. (See the output above) 
+2. In each poll, If consumer polls 500 records but only commit 1 record offset (Which simulates partial transaction), the current consumer ignore offset and continues to poll from 501 records. (See the output above)
+ However, if consumer connection is closed, and then restart it again, it will start fetching offset records. Which totally makes sense.
 3. If we have long processing time for each poll which takes longer than session timeout time, Kafka will re-balance the consumer group. 
 The interesting fact is, this long-time processing consumer will not be terminated but also resume to process again later on. 
